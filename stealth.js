@@ -144,6 +144,57 @@ export async function launchStealthBrowser(headless = false, proxy = null) {
 }
 
 /**
+ * Auto-solve Cloudflare Turnstile challenges
+ * Polls for the iframe and clicks it
+ */
+export async function solveTurnstile(page, timeout = 10000) {
+  const start = Date.now();
+  while (Date.now() - start < timeout) {
+    try {
+      // Check for Turnstile iframe
+      const frame = page.frame({ url: /turnstile/ }) || page.frame({ url: /challenges\.cloudflare/ });
+      if (frame) {
+        // Try clicking inside the challenge iframe
+        await frame.click('body', { timeout: 3000 }).catch(() => {});
+        await new Promise(r => setTimeout(r, 2000));
+      }
+
+      // Check if Turnstile is solved (hidden input with cf-turnstile-response)
+      const solved = await page.$('[name="cf-turnstile-response"]');
+      if (solved) {
+        const value = await solved.evaluate(el => el.value);
+        if (value && value.length > 10) {
+          console.log('  ✓ Turnstile solved');
+          return true;
+        }
+      }
+
+      // Check if challenge disappeared (form inputs now visible)
+      const inputs = await page.$$('input:not([type="hidden"])');
+      if (inputs.length > 0) {
+        console.log('  ✓ Turnstile passed (form visible)');
+        return true;
+      }
+
+      // Try clicking the iframe wrapper
+      const wrappers = await page.$$('div');
+      for (const div of wrappers) {
+        try {
+          const box = await div.boundingBox();
+          if (box && box.width > 290 && box.width <= 310 && box.height > 60 && box.height < 80) {
+            await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+            break;
+          }
+        } catch {}
+      }
+    } catch {}
+    await page.waitForTimeout(1000);
+  }
+  console.log('  ⚠️ Turnstile timeout');
+  return false;
+}
+
+/**
  * Create a stealth-configured context and page
  */
 export async function createStealthPage(browser) {
