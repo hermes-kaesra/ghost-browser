@@ -1,22 +1,26 @@
 {
-  "name": "playwright-stealth-mcp",
+  "name": "ghost-browser",
   "version": "1.0.0",
-  "description": "Cloudflare-bypassing Playwright browser as MCP server. Fork, connect, scrape.",
+  "description": "The browser they can't see. Cloudflare-proof Playwright MCP server.",
   "main": "index.js",
   "bin": {
-    "playwright-stealth-mcp": "cli.js"
+    "ghost-browser": "cli.js"
   },
   "type": "module",
   "scripts": {
     "start": "node cli.js",
     "test": "node test.js"
   },
-  "keywords": ["playwright", "mcp", "stealth", "cloudflare", "bot", "scraping", "browser", "automation"],
+  "keywords": [
+    "playwright", "mcp", "stealth", "cloudflare", "undetected",
+    "bot", "scraping", "browser", "automation", "bypass",
+    "ghost", "invisible", "turnstile", "fingerprint"
+  ],
   "author": "hermes-kaesra",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hermes-kaesra/playwright-stealth-mcp"
+    "url": "https://github.com/hermes-kaesra/ghost-browser"
   },
   "dependencies": {
     "playwright": "^1.52.0",
