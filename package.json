@@ -1,5 +1,5 @@
 {
-  "name": "ghost-browser",
+  "name": "@hermes-kaesra/ghost-browser",
   "version": "1.0.0",
   "description": "The browser they can't see. Cloudflare-proof Playwright MCP server.",
   "main": "index.js",
@@ -12,9 +12,20 @@
     "test": "node test.js"
   },
   "keywords": [
-    "playwright", "mcp", "stealth", "cloudflare", "undetected",
-    "bot", "scraping", "browser", "automation", "bypass",
-    "ghost", "invisible", "turnstile", "fingerprint"
+    "playwright",
+    "mcp",
+    "stealth",
+    "cloudflare",
+    "undetected",
+    "bot",
+    "scraping",
+    "browser",
+    "automation",
+    "bypass",
+    "ghost",
+    "invisible",
+    "turnstile",
+    "fingerprint"
   ],
   "author": "hermes-kaesra",
   "license": "MIT",
